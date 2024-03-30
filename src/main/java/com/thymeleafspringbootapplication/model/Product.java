@@ -1,11 +1,15 @@
 package com.thymeleafspringbootapplication.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -21,7 +25,7 @@ public class Product {
     private String name;
 
     @Column(name = "exp_date")
-    private Date expirationDate;
+    private LocalDateTime expirationDate;
 
     @Column(name = "product_availability", nullable = false)
     private Long availability;
@@ -36,7 +40,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(String name, Date expirationDate, Long availability, Long makePrice, Long sellPrice) {
+    public Product(String name, LocalDateTime expirationDate, Long availability, Long makePrice, Long sellPrice) {
         this.name = name;
         this.expirationDate = expirationDate;
         this.availability = availability;
@@ -61,11 +65,11 @@ public class Product {
         this.name = name;
     }
 
-    public Date getExpirationDate() {
+    public LocalDateTime getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(Date expirationDate) {
+    public void setExpirationDate(LocalDateTime expirationDate) {
         this.expirationDate = expirationDate;
     }
 

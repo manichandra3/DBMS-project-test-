@@ -13,7 +13,7 @@
 	<h1>Employee Management System</h1>
 	<hr>
 	<h2>Update Employee</h2>
-	<form action="#" th:action="@{/saveEmployee}" th:object="${employee}" method="post">
+	<form action="#" th:action="@{/admin/saveEmployee}" th:object="${employee}" method="post">
 		<!-- Add hidden form field to handle update -->
 				<input type="hidden" th:field="*{id}" />
 			
@@ -29,7 +29,7 @@
 	</form>
 	<hr>
 		
-		<a th:href = "@{/}"> Back to Employee List</a>
+		<a th:href = "@{/admin}"> Back to Employee List</a>
 	</div>
 </body>
 </html>

@@ -14,7 +14,7 @@
 		<h1>Employee Management System</h1>
 		<hr>
 		<h2>Add Employee</h2>
-		<form action="#" th:action="@{/saveEmployee}" th:object="${employee}" method="POST">
+		<form action="#" th:action="@{/admin/saveEmployee}" th:object="${employee}" method="POST">
 			<input type="text" th:field="*{name}" placeholder="Employee Name" class="form-control mb-4 col-4">
 			<input type="text" th:field="*{contact}" placeholder="Employee Contact" class="form-control mb-4 col-4">
 			<input type="password" th:field="*{password}" placeholder="Employee Password" class="form-control mb-4 col-4">
@@ -24,7 +24,7 @@
 			<button type="submit" class="btn btn-info col2">Add Employee</button>
 		</form>
 		<hr>
-		<a th:href="@{/}">Back to Employee</a>
+		<a th:href="@{/admin}">Back to Employee</a>
 	</div>
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
