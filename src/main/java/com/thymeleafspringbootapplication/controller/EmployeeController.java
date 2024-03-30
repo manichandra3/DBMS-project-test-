@@ -11,32 +11,34 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 // Employee controller routes all the incoming HTTP requests to appropriate methods and pages.
+// Employee manages products.
 @Controller
 public class EmployeeController {
 
     @Autowired
     private ProductService productService;
 
+//    Display the details of all the products in the DB.
     @GetMapping("/employee/products/showAllProducts")
     public String viewProducts(Model model) {
         model.addAttribute("listProducts", productService.getAllProducts());
         return "show_products";
     }
 
+//    Add a new product.
     @PostMapping("/employee/products/saveProduct")
-    public String saveEmployee(@ModelAttribute("product") Product product) {
+    public String saveProduct(@ModelAttribute("product") Product product) {
         productService.saveProduct(product);
         return "redirect:/employee/products/showProducts";
     }
 
+//    Display form for product details update.
     @GetMapping("/employee/products/showFormForUpdate/{id}")
     public String showFromForUpdate(@PathVariable(value="id") long id, Model model) {
         Product product = productService.getProductById(id);
         model.addAttribute("product", product);
         return "update_product";
     }
-
-
 
 
 
