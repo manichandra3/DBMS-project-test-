@@ -32,7 +32,7 @@ public class EmployeeController {
         return "redirect:/employee/products/showProducts";
     }
 
-//    Display form for product details update.
+//    Display the product details form for update.
     @GetMapping("/employee/products/showFormForUpdate/{id}")
     public String showFromForUpdate(@PathVariable(value="id") long id, Model model) {
         Product product = productService.getProductById(id);
@@ -40,6 +40,6 @@ public class EmployeeController {
         return "update_product";
     }
 
-
+//    Display the
 
 }

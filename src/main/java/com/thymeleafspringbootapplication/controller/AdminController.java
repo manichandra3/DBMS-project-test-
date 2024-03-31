@@ -14,6 +14,10 @@ public class AdminController {
 	@Autowired
 	private EmployeeService employeeService;
 
+	@RequestMapping("/admin/login")
+	public String viewLoginPage(){
+		return "admin_login";
+	}
 
 // Display details of all the employees in the DB.
 	@GetMapping("/admin")
@@ -37,7 +41,7 @@ public class AdminController {
 	}
 //	Display the employee details form for employee update.
 	@GetMapping("/admin/showFormForUpdate/{id}")
-	public String showFormForUpdate(@PathVariable(value="id") long id, Model model) {
+	public String showFormForUpdate(@PathVariable(value = "id") long id, Model model) {
 		Employee employee = employeeService.getEmployeeById(id);
 		model.addAttribute("employee", employee);
 		return "update_employee";
