@@ -32,7 +32,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 		if (optional.isPresent()) {
 			employee =  optional.get();
 		} else {
-			throw new RuntimeException(" Employee not found for id :: " + id);
+			throw new RuntimeException("Employee not found for id :: " + id);
 		}
 		return employee;
 	}
@@ -40,6 +40,18 @@ public class EmployeeServiceImpl implements EmployeeService{
 	@Override
 	public void deleteEmployeeById(long id) {
 		this.employeeRepository.deleteById(id);
+	}
+
+	@Override
+	public Optional<Employee> authenticate(long employeeId, String password) {
+		// Retrieve the employee from the database based on the employeeId
+		Optional<Employee> employee = employeeRepository.findById(employeeId);
+
+		// Check if the employee exists and the password matches
+		if (employee.isPresent() && employee.get().getPassword().equals(password)) {
+			return employee;
+		}
+		return Optional.empty();
 	}
 
 }

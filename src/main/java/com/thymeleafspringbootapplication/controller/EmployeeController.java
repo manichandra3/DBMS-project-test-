@@ -1,6 +1,8 @@
 package com.thymeleafspringbootapplication.controller;
 
 import com.thymeleafspringbootapplication.model.Product;
+import com.thymeleafspringbootapplication.model.Employee;
+import com.thymeleafspringbootapplication.service.EmployeeService;
 import com.thymeleafspringbootapplication.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,8 @@ public class EmployeeController {
 
     @Autowired
     private ProductService productService;
+    @Autowired
+    private EmployeeService employeeService;
 
 //    Display the details of all the products in the DB.
     @GetMapping("/employee/products/showAllProducts")
@@ -40,6 +44,12 @@ public class EmployeeController {
         return "update_product";
     }
 
-//    Display the
+//    Display the employee profile.
+    @GetMapping("/employee/profile/{id}")
+    public String showEmployeeProfile(@PathVariable(value = "id") long id, Model model) {
+        Employee employee = employeeService.getEmployeeById(id);
+        model.addAttribute("employee", employee);
+        return "show_employee_profile";
+    }
 
 }
