@@ -19,7 +19,7 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" th:href="@{/employee/profile/}">Profile</a>
+        <a class="nav-link" th:href="@{/employee/profile/{id}(id = ${employee.getId()})}">Profile</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" th:href="@{/employee/products/showAllProducts}">Products</a>

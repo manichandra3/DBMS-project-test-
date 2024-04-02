@@ -1,6 +1,7 @@
 package com.thymeleafspringbootapplication.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.thymeleafspringbootapplication.model.Employee;
 
@@ -9,5 +10,5 @@ public interface EmployeeService {
 	void saveEmployee(Employee employee);
 	Employee getEmployeeById(long id);
 	void deleteEmployeeById(long id);
-	Object authenticate(long employeeId, String password);
+	Optional<Employee> authenticate(long employeeId, String password);
 }
