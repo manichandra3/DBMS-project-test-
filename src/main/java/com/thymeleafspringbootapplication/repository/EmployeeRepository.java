@@ -1,10 +1,12 @@
 package com.thymeleafspringbootapplication.repository;
 
+import com.thymeleafspringbootapplication.model.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.thymeleafspringbootapplication.model.Employee;
+import java.util.Optional;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long>{
+    Optional<Employee> findByContact(String contact);
 }

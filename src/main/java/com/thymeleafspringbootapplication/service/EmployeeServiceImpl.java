@@ -11,7 +11,6 @@ import com.thymeleafspringbootapplication.repository.EmployeeRepository;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService{
-	
 	@Autowired
 	private EmployeeRepository employeeRepository;
 	
@@ -43,9 +42,9 @@ public class EmployeeServiceImpl implements EmployeeService{
 	}
 
 	@Override
-	public Optional<Employee> authenticate(long employeeId, String password) {
+	public Optional<Employee> authenticate(String employeeContact, String password) {
 		// Retrieve the employee from the database based on the employeeId
-		Optional<Employee> employee = employeeRepository.findById(employeeId);
+		Optional<Employee> employee = employeeRepository.findByContact(employeeContact);
 
 		// Check if the employee exists and the password matches
 		if (employee.isPresent() && employee.get().getPassword().equals(password)) {

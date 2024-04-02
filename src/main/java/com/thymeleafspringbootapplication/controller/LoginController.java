@@ -1,13 +1,12 @@
 package com.thymeleafspringbootapplication.controller;
 
 import com.thymeleafspringbootapplication.model.Employee;
+import com.thymeleafspringbootapplication.model.LoginRequest;
 import com.thymeleafspringbootapplication.service.EmployeeService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -19,21 +18,6 @@ public class LoginController {
         this.employeeService = employeeService;
     }
 
-    @PostMapping("/admin/login")
-    public String adminLogin(String username, String password, Model model) {
-        // Perform database validation here
-        // You can use Spring Data JPA, JDBC, or any other method to validate the credentials
-
-        // For demonstration purposes, let's assume a simple validation
-        if ("admin".equals(username) && "password".equals(password)) {
-            // Authentication successful
-            return "redirect:/admin";
-        } else {
-            // Authentication failed
-            model.addAttribute("error", "Invalid username or password");
-            return "admin_login";
-        }
-    }
 
     @GetMapping("/employee/login")
     public String showEmployeeLoginForm(Model model) {
@@ -41,18 +25,19 @@ public class LoginController {
     }
 
     @PostMapping("/employee/login")
-    public String employeeLogin(@RequestParam Long employeeId, @RequestParam String password, Model model) {
-        Optional<Employee> employee = employeeService.authenticate(employeeId, password);
+    public ResponseEntity<Optional<Employee>> employeeLogin(@RequestBody LoginRequest request) {
+        // Extract employeeContact and password from the request object
+        String employeeContact = request.getEmployeeContact();
+        String password = request.getPassword();
 
+        // Perform authentication using employeeContact and password
+        Optional<Employee> employee = employeeService.authenticate(employeeContact, password);
+
+        // Return ResponseEntity with JSON data
         if (employee.isPresent()) {
-            // Authentication successful
-            // add the employee object to the session or model for further use
-            model.addAttribute("employee", employee);
-            return "redirect:/employee/profile/"+employee.get().getId(); // Return the view for the employee dashboard
+            return ResponseEntity.ok(employee);
         } else {
-            // Authentication failed
-            model.addAttribute("error", "Invalid Employee ID or Password");
-            return "employee_login";
+            return ResponseEntity.notFound().build();
         }
     }
 
