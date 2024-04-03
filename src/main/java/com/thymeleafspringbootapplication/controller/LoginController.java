@@ -40,9 +40,4 @@ public class LoginController {
             return ResponseEntity.notFound().build();
         }
     }
-
-    @RequestMapping("/")
-    public String home() {
-        return "index";
-    }
 }
