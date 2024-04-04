@@ -1,9 +1,18 @@
 package com.thymeleafspringbootapplication.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "PRODUCT")
 public class Product {
 
@@ -27,9 +36,6 @@ public class Product {
     @Column(name = "product_sell_price", nullable = false)
     private Long sellPrice;
 
-    // Constructors, getters, and setters
-    public Product() {
-    }
 
     public Product(String name, LocalDateTime expirationDate, Long availability, Long makePrice, Long sellPrice) {
         this.name = name;
@@ -39,52 +45,4 @@ public class Product {
         this.sellPrice = sellPrice;
     }
 
-    // Getters and setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public LocalDateTime getExpirationDate() {
-        return expirationDate;
-    }
-
-    public void setExpirationDate(LocalDateTime expirationDate) {
-        this.expirationDate = expirationDate;
-    }
-
-    public Long getAvailability() {
-        return availability;
-    }
-
-    public void setAvailability(Long availability) {
-        this.availability = availability;
-    }
-
-    public Long getMakePrice() {
-        return makePrice;
-    }
-
-    public void setMakePrice(Long makePrice) {
-        this.makePrice = makePrice;
-    }
-
-    public Long getSellPrice() {
-        return sellPrice;
-    }
-
-    public void setSellPrice(Long sellPrice) {
-        this.sellPrice = sellPrice;
-    }
 }

@@ -1,8 +1,17 @@
 package com.thymeleafspringbootapplication.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "INGREDIENT")
 public class Ingredient {
     @Id
@@ -21,54 +30,10 @@ public class Ingredient {
     @Column(name = "Ingredient_type")
     private String ingredientType;
 
-    // Constructors, getters, and setters
-    public Ingredient() {
-    }
-    public Ingredient(Long ingredientId, String ingredientName, Long ingredientPrice, Float ingredientQuantity, String ingredientType) {
-        this.ingredientId = ingredientId;
+    public Ingredient(String ingredientName, Long ingredientPrice, Float ingredientQuantity, String ingredientType) {
         this.ingredientName = ingredientName;
         this.ingredientPrice = ingredientPrice;
         this.ingredientQuantity = ingredientQuantity;
-        this.ingredientType = ingredientType;
-    }
-
-    public Long getIngredientId() {
-        return ingredientId;
-    }
-
-    public void setIngredientId(Long ingredientId) {
-        this.ingredientId = ingredientId;
-    }
-
-    public String getIngredientName() {
-        return ingredientName;
-    }
-
-    public void setIngredientName(String ingredientName) {
-        this.ingredientName = ingredientName;
-    }
-
-    public Long getIngredientPrice() {
-        return ingredientPrice;
-    }
-
-    public void setIngredientPrice(Long ingredientPrice) {
-        this.ingredientPrice = ingredientPrice;
-    }
-
-    public Float getIngredientQuantity() {
-        return ingredientQuantity;
-    }
-
-    public void setIngredientQuantity(Float ingredientQuantity) {
-        this.ingredientQuantity = ingredientQuantity;
-    }
-
-    public String getIngredientType() {
-        return ingredientType;
-    }
-
-    public void setIngredientType(String ingredientType) {
         this.ingredientType = ingredientType;
     }
 }

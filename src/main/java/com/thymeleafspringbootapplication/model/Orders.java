@@ -1,9 +1,18 @@
 package com.thymeleafspringbootapplication.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "ORDERS")
 public class Orders {
     @Id
@@ -19,46 +28,8 @@ public class Orders {
     @Column(name = "order_total")
     private Long orderTotal;
 
-    // Constructors, getters, and setters
-    public Orders() {
-    }
-
-    public Orders(Long orderId, Long customerId, LocalDateTime orderDate, Long orderTotal) {
-        this.orderId = orderId;
-        this.customerId = customerId;
+    public Orders(LocalDateTime orderDate, Long orderTotal) {
         this.orderDate = orderDate;
-        this.orderTotal = orderTotal;
-    }
-
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public Long getCustomerId() {
-        return customerId;
-    }
-
-    public LocalDateTime getOrderDate() {
-        return orderDate;
-    }
-
-    public Long getOrderTotal() {
-        return orderTotal;
-    }
-
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
-
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
-    }
-
-    public void setOrderDate(LocalDateTime orderDate) {
-        this.orderDate = orderDate;
-    }
-
-    public void setOrderTotal(Long orderTotal) {
         this.orderTotal = orderTotal;
     }
 }

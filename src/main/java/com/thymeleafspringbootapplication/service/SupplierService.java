@@ -1,7 +1,6 @@
 package com.thymeleafspringbootapplication.service;
 
 import com.thymeleafspringbootapplication.model.Supplier;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

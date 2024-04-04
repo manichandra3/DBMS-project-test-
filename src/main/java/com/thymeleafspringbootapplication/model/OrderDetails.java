@@ -1,8 +1,17 @@
 package com.thymeleafspringbootapplication.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "ORDER_DETAILS")
 public class OrderDetails {
     @Id
@@ -18,48 +27,9 @@ public class OrderDetails {
     @Column(name = "order_price")
     private Long orderPrice;
 
-    // Constructors, getters, and setters
-
-
-    public OrderDetails() {
-    }
-
-    public OrderDetails(Long orderDid, Long productQuantity, String orderStatus, Long orderPrice) {
-        this.orderDid = orderDid;
+    public OrderDetails(Long productQuantity, String orderStatus, Long orderPrice) {
         this.productQuantity = productQuantity;
         this.orderStatus = orderStatus;
-        this.orderPrice = orderPrice;
-    }
-
-    public Long getOrderDid() {
-        return orderDid;
-    }
-
-    public Long getProductQuantity() {
-        return productQuantity;
-    }
-
-    public String getOrderStatus() {
-        return orderStatus;
-    }
-
-    public Long getOrderPrice() {
-        return orderPrice;
-    }
-
-    public void setOrderDid(Long orderDid) {
-        this.orderDid = orderDid;
-    }
-
-    public void setProductQuantity(Long productQuantity) {
-        this.productQuantity = productQuantity;
-    }
-
-    public void setOrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus;
-    }
-
-    public void setOrderPrice(Long orderPrice) {
         this.orderPrice = orderPrice;
     }
 }
