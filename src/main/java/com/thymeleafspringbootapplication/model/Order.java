@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "ORDERS")
-public class Orders {
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
@@ -28,7 +28,7 @@ public class Orders {
     @Column(name = "order_total")
     private Long orderTotal;
 
-    public Orders(LocalDateTime orderDate, Long orderTotal) {
+    public Order(LocalDateTime orderDate, Long orderTotal) {
         this.orderDate = orderDate;
         this.orderTotal = orderTotal;
     }

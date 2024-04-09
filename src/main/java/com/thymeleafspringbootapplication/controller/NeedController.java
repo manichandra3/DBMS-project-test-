@@ -74,6 +74,7 @@ public class NeedController {
         needDTO.setProductName(product.getName());
         needDTO.setIngredientName(ingredient.getIngredientName());
         return needDTO;
+        
     }
 
 }

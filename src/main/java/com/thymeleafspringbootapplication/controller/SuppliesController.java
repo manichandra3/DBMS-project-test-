@@ -41,7 +41,7 @@ public class SuppliesController {
         }
     }
 
-    @PostMapping("/delete/{supplierId}/{ingredientId}")
+    @DeleteMapping("/delete/{supplierId}/{ingredientId}")
     public ResponseEntity<Void> delete(@PathVariable long supplierId, @PathVariable long ingredientId) {
         suppliesService.deleteSupplyById(supplierId, ingredientId);
         return ResponseEntity.status(HttpStatus.OK).build();
