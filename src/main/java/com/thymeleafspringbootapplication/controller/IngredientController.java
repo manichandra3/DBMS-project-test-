@@ -35,11 +35,25 @@ public class IngredientController {
     }
 
     @PostMapping("/update/{id}")
-    public ResponseEntity<Void> updateIngredient(@PathVariable long id) {
+    public ResponseEntity<Void> updateIngredient(@PathVariable long id, @RequestBody Ingredient updatedIngredient) {
         Ingredient ingredient = ingredientService.getIngredientById(id);
+        
+        if (ingredient == null) {
+            return ResponseEntity.notFound().build();
+        }
+        
+        // Update the ingredient properties with the new values
+        ingredient.setIngredientName(updatedIngredient.getIngredientName());
+        ingredient.setIngredientPrice(updatedIngredient.getIngredientPrice());
+        ingredient.setIngredientQuantity(updatedIngredient.getIngredientQuantity());
+        ingredient.setIngredientType(updatedIngredient.getIngredientType());
+        
+        // Save the updated ingredient
         ingredientService.saveIngredient(ingredient);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        
+        return ResponseEntity.ok().build();
     }
+
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteIngredient(@PathVariable long id) {
@@ -57,7 +71,7 @@ public class IngredientController {
                 return ResponseEntity.notFound().build();
             }
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 

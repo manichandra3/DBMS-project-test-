@@ -6,7 +6,9 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.thymeleafspringbootapplication.model.Customer;
 import com.thymeleafspringbootapplication.model.Order;
+import com.thymeleafspringbootapplication.repository.CustomerRepository;
 import com.thymeleafspringbootapplication.repository.OrderRepository;
 
 
@@ -14,8 +16,10 @@ import com.thymeleafspringbootapplication.repository.OrderRepository;
 public class OrderServiceImpl implements OrderService{
 
     private final OrderRepository orderRepository;
-    public OrderServiceImpl(OrderRepository orderRepository) {
+    private final CustomerRepository customerRepository;
+    public OrderServiceImpl(OrderRepository orderRepository, CustomerRepository customerRepository) {
         this.orderRepository = orderRepository;
+        this.customerRepository = customerRepository;
     }
 
     @Override
@@ -46,6 +50,18 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public void deleteOrderById(long id) {
         orderRepository.deleteById(id);
+    }
+
+    @Override
+    public Customer getCustomerById(long id) {
+        Optional<Customer> optional = customerRepository.findById(id);
+        Customer customer;
+        if(optional.isPresent()) {
+            customer = optional.get();
+        } else {
+            throw new RuntimeException("Customer not found for id :: " + id);
+        }
+        return customer;
     }
 
 }
