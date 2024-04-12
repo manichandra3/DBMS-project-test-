@@ -12,7 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class OrderDTO {
     private Long id;
-    private String customerName;
+    private Long customerId;
     private LocalDateTime orderDate;
     private Long orderTotal;
     

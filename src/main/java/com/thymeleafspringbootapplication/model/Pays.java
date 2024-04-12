@@ -15,6 +15,9 @@ public class Pays {
     @EmbeddedId
     private PaysKey id;
 
+    @Column(name = "customer_id")
+    private Long customerId;
+
     @Column(name = "payment_mode")
     private String paymentMode;
 

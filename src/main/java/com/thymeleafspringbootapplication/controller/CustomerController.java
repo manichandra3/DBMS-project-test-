@@ -2,9 +2,9 @@ package com.thymeleafspringbootapplication.controller;
 
 import com.thymeleafspringbootapplication.model.Customer;
 import com.thymeleafspringbootapplication.service.CustomerService;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,12 +12,16 @@ import java.util.List;
 
 @RestController
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @RequestMapping("/customers")
 public class CustomerController {
 
     private CustomerService customerService;
+
+    @Autowired
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
+    }
 
     @GetMapping("/showAll")
     public ResponseEntity<List<Customer>> showAllCustomers() {

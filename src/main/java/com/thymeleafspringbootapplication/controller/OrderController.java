@@ -1,15 +1,17 @@
 package com.thymeleafspringbootapplication.controller;
 
 import com.thymeleafspringbootapplication.model.Order;
-import com.thymeleafspringbootapplication.model.TransactionDetails;
-import com.thymeleafspringbootapplication.service.CustomerService;
+import com.thymeleafspringbootapplication.model.OrderDTO;
+import com.thymeleafspringbootapplication.model.PaysKey;
 import com.thymeleafspringbootapplication.service.OrderService;
+import com.thymeleafspringbootapplication.service.PaysServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -18,7 +20,7 @@ import java.util.List;
 @RequestMapping("/orders")
 public class OrderController {
     private final OrderService orderService;
-    private final CustomerService customerService;
+    private final PaysServiceImpl paysServiceImpl;
 
     @GetMapping("/showAll")
     public ResponseEntity<List<Order>> showAllOrders() {
@@ -45,9 +47,25 @@ public class OrderController {
         return ResponseEntity.ok(order);
     }
 
-    @GetMapping("/transaction/{id}")
-    public ResponseEntity<TransactionDetails> showOrderByTransactionId(@PathVariable long id) {
-        return null;
+    @GetMapping("/details/showAll")
+    public ResponseEntity<List<OrderDTO>> showAllOrdersDetails() {
+        List<Order> ordersList = orderService.getAllOrders();
+        List<OrderDTO> orderDTOList = convertToOrderDTO(ordersList);
+        return ResponseEntity.ok(orderDTOList);
+    }
+
+    public List<OrderDTO> convertToOrderDTO(List<Order> orders) {
+        List<OrderDTO> orderDTOList = new ArrayList<>();
+        for (Order order : orders) {
+            PaysKey paysKey = new PaysKey(order.getOrderId());
+            OrderDTO orderDTO = new OrderDTO();
+            orderDTO.setOrderTotal(order.getOrderTotal());
+            orderDTO.setOrderDate(order.getOrderDate());
+            orderDTO.setId(order.getOrderId());
+            orderDTO.setCustomerId(paysServiceImpl.getPaysById(paysKey).getCustomerId());
+            orderDTOList.add(orderDTO);
+        }
+        return orderDTOList;
     }
 
 }

@@ -16,6 +16,7 @@ import jakarta.persistence.*;
 public class OrderDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_did")
     private Long id;
 
     @Column(name = "product_quantity")

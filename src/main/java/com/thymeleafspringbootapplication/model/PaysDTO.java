@@ -5,13 +5,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class PaysDTO {
     private PaysKey id;
-    private String customer_name;
-    private String payment_mode;
-    private Long order_total;
+    private Long customerId;
+    private String customerName;
+    private LocalDateTime paymentDate;
+    private String paymentMode;
+    private Long orderTotal;
 }

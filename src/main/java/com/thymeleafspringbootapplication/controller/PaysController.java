@@ -44,13 +44,16 @@ public class PaysController {
         return ResponseEntity.ok(paysDTOList);
     }
 
+
     public List<PaysDTO> ConvertToPaysDTO(List<Pays> paysList) {
         List<PaysDTO> paysDTOList = new ArrayList<>();
         for (Pays pays : paysList) {
             PaysDTO paysDTO = new PaysDTO();
             paysDTO.setId(pays.getId());
-            paysDTO.setCustomer_name(customerService.getCustomerById(pays.getId().getCustomerId()).getName());
-            paysDTO.setOrder_total(orderService.getOrderById(pays.getId().getOrderId()).getOrderTotal());
+            paysDTO.setCustomerName(customerService.getCustomerById(pays.getCustomerId()).getName());
+            paysDTO.setCustomerId(pays.getCustomerId());
+            paysDTO.setPaymentDate(orderService.getOrderById(pays.getId().getOrderId()).getOrderDate());
+            paysDTO.setOrderTotal(orderService.getOrderById(pays.getId().getOrderId()).getOrderTotal());
             paysDTOList.add(paysDTO);
         }
         return paysDTOList;

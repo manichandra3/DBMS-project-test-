@@ -15,20 +15,18 @@ public class PaysKey implements Serializable {
 
     @Column(name = "order_id")
     private Long orderId;
-    @Column(name = "customer_id")
-    private Long customerId;
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PaysKey paysKey = (PaysKey) o;
-        return Objects.equals(orderId, paysKey.orderId) && Objects.equals(customerId, paysKey.customerId);
+        return Objects.equals(orderId, paysKey.orderId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(orderId, customerId);
+        return Objects.hashCode(orderId);
     }
-
 }
