@@ -13,10 +13,11 @@ import com.thymeleafspringbootapplication.repository.OrderRepository;
 
 
 @Service
-public class OrderServiceImpl implements OrderService{
+public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
     private final CustomerRepository customerRepository;
+
     public OrderServiceImpl(OrderRepository orderRepository, CustomerRepository customerRepository) {
         this.orderRepository = orderRepository;
         this.customerRepository = customerRepository;
@@ -24,7 +25,7 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public List<Order> getAllOrders() {
-        Iterable<Order> iterable =  orderRepository.findAll();
+        Iterable<Order> iterable = orderRepository.findAll();
         List<Order> orderList = new ArrayList<>();
         iterable.forEach(orderList::add);
         return orderList;
@@ -39,7 +40,7 @@ public class OrderServiceImpl implements OrderService{
     public Order getOrderById(long id) {
         Optional<Order> optional = orderRepository.findById(id);
         Order order;
-        if(optional.isPresent()) {
+        if (optional.isPresent()) {
             order = optional.get();
         } else {
             throw new RuntimeException("Order not found for Id :: " + id);
@@ -56,12 +57,11 @@ public class OrderServiceImpl implements OrderService{
     public Customer getCustomerById(long id) {
         Optional<Customer> optional = customerRepository.findById(id);
         Customer customer;
-        if(optional.isPresent()) {
+        if (optional.isPresent()) {
             customer = optional.get();
         } else {
             throw new RuntimeException("Customer not found for id :: " + id);
         }
         return customer;
     }
-
 }

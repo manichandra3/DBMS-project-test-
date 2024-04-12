@@ -19,9 +19,6 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
 
-    @Column(name = "customer_id")
-    private Long customerId;
-
     @Column(name = "order_date")
     private LocalDateTime orderDate;
 

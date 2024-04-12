@@ -25,8 +25,13 @@ public class ProductController {
 
     @PostMapping("/save")
     public ResponseEntity<Void> saveProduct(@RequestBody Product product) {
-        productService.saveProduct(product);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        try {
+            productService.saveProduct(product);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+
     }
 
     @PutMapping("/update/{id}")
@@ -36,16 +41,19 @@ public class ProductController {
         if (existingProduct == null) {
             return ResponseEntity.notFound().build();
         }
+        try {
+            existingProduct.setName(productDetails.getName());
+            existingProduct.setExpirationDate(productDetails.getExpirationDate());
+            existingProduct.setAvailability(productDetails.getAvailability());
+            existingProduct.setMakePrice(productDetails.getMakePrice());
+            existingProduct.setSellPrice(productDetails.getSellPrice());
 
-        existingProduct.setName(productDetails.getName());
-        existingProduct.setExpirationDate(productDetails.getExpirationDate());
-        existingProduct.setAvailability(productDetails.getAvailability());
-        existingProduct.setMakePrice(productDetails.getMakePrice());
-        existingProduct.setSellPrice(productDetails.getSellPrice());
+            productService.saveProduct(existingProduct);
 
-        productService.saveProduct(existingProduct);
-
-        return ResponseEntity.ok().build();
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
 
@@ -61,6 +69,16 @@ public class ProductController {
         if (product != null) {
             return ResponseEntity.ok(product);
         } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/searchByName/{name}")
+    public ResponseEntity<List<Product>> searchProductByName(@PathVariable(value = "name") String name) {
+        try {
+            List<Product> productList = productService.getProductsByName(name);
+            return ResponseEntity.ok(productList);
+        } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
     }

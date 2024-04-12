@@ -13,6 +13,7 @@ import java.util.List;
 public class EmployeeController {
 
     private final EmployeeService employeeService;
+
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
@@ -30,9 +31,10 @@ public class EmployeeController {
         employeeService.saveEmployee(employee);
         return ResponseEntity.ok("Employee successfully saved to the Database");
     }
+
     //	Delete employee.
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteEmployee(@PathVariable (value = "id") long id) {
+    public ResponseEntity<String> deleteEmployee(@PathVariable(value = "id") long id) {
         this.employeeService.deleteEmployeeById(id);
         return ResponseEntity.ok("Employee successfully deleted from the Database");
     }

@@ -14,6 +14,7 @@ import java.util.List;
 public class IngredientController {
 
     IngredientService ingredientService;
+
     public IngredientController(IngredientService ingredientService) {
         this.ingredientService = ingredientService;
     }
@@ -37,20 +38,20 @@ public class IngredientController {
     @PostMapping("/update/{id}")
     public ResponseEntity<Void> updateIngredient(@PathVariable long id, @RequestBody Ingredient updatedIngredient) {
         Ingredient ingredient = ingredientService.getIngredientById(id);
-        
+
         if (ingredient == null) {
             return ResponseEntity.notFound().build();
         }
-        
+
         // Update the ingredient properties with the new values
         ingredient.setIngredientName(updatedIngredient.getIngredientName());
         ingredient.setIngredientPrice(updatedIngredient.getIngredientPrice());
         ingredient.setIngredientQuantity(updatedIngredient.getIngredientQuantity());
         ingredient.setIngredientType(updatedIngredient.getIngredientType());
-        
+
         // Save the updated ingredient
         ingredientService.saveIngredient(ingredient);
-        
+
         return ResponseEntity.ok().build();
     }
 

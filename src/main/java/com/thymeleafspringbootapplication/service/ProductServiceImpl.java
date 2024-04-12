@@ -44,4 +44,13 @@ public class ProductServiceImpl implements ProductService{
     public void deleteProductById(long id) {
         this.productRepository.deleteById(id);
     }
+
+    @Override
+    public List<Product> getProductsByName(String name) {
+        try {
+            return productRepository.findAllByNameContainingIgnoreCase(name);
+        } catch (Exception e) {
+            throw new RuntimeException(" Product not found for name :: " + name);
+        }
+    }
 }

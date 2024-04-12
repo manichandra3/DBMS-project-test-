@@ -3,17 +3,19 @@ package com.thymeleafspringbootapplication.controller;
 import com.thymeleafspringbootapplication.model.Employee;
 import com.thymeleafspringbootapplication.model.LoginRequest;
 import com.thymeleafspringbootapplication.service.EmployeeService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
-import jakarta.servlet.http.HttpSession;
 import java.util.Optional;
 
 @Controller
 public class LoginController {
 
     EmployeeService employeeService;
+
     public LoginController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }

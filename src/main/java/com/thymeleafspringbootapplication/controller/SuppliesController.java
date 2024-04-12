@@ -1,6 +1,9 @@
 package com.thymeleafspringbootapplication.controller;
 
-import com.thymeleafspringbootapplication.model.*;
+import com.thymeleafspringbootapplication.model.Ingredient;
+import com.thymeleafspringbootapplication.model.Supplier;
+import com.thymeleafspringbootapplication.model.Supplies;
+import com.thymeleafspringbootapplication.model.SuppliesDTO;
 import com.thymeleafspringbootapplication.service.SuppliesService;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -16,6 +19,7 @@ import java.util.stream.Collectors;
 public class SuppliesController {
 
     private final SuppliesService suppliesService;
+
     public SuppliesController(SuppliesService suppliesService) {
         this.suppliesService = suppliesService;
     }
@@ -26,7 +30,7 @@ public class SuppliesController {
             List<Supplies> suppliesList = suppliesService.getAllSupplies();
             List<SuppliesDTO> suppliesDTOList = convertToSuppliesDTO(suppliesList);
             return new ResponseEntity<>(suppliesDTOList, HttpStatus.OK);
-        } catch(DataAccessException e) {
+        } catch (DataAccessException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
@@ -50,7 +54,7 @@ public class SuppliesController {
     @GetMapping("/{supplierId}/{ingredientId}")
     public ResponseEntity<SuppliesDTO> showFormForUpdate(@PathVariable long supplierId, @PathVariable long ingredientId) {
         // Call your service or repository layer to fetch the SuppliesDTO based on supplierId and ingredientId
-        try{
+        try {
             Supplies supplies = suppliesService.getSupplyById(supplierId, ingredientId);
             if (supplies != null) {
                 // Other properties...
@@ -60,7 +64,7 @@ public class SuppliesController {
                 // Return ResponseEntity with not found status if SuppliesDTO is not found
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-        } catch(RuntimeException e){
+        } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 

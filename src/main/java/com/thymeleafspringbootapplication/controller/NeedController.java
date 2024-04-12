@@ -1,6 +1,9 @@
 package com.thymeleafspringbootapplication.controller;
 
-import com.thymeleafspringbootapplication.model.*;
+import com.thymeleafspringbootapplication.model.Ingredient;
+import com.thymeleafspringbootapplication.model.Need;
+import com.thymeleafspringbootapplication.model.NeedDTO;
+import com.thymeleafspringbootapplication.model.Product;
 import com.thymeleafspringbootapplication.service.NeedService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +18,7 @@ import java.util.stream.Collectors;
 public class NeedController {
 
     private final NeedService needService;
+
     public NeedController(NeedService needService) {
         this.needService = needService;
     }
@@ -28,10 +32,10 @@ public class NeedController {
 
     @PostMapping("/save")
     public ResponseEntity<Void> saveNeed(@RequestBody Need need) {
-        try{
+        try {
             needService.saveNeed(need);
             return ResponseEntity.ok().build();
-        } catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
@@ -41,7 +45,7 @@ public class NeedController {
         try {
             needService.deleteNeedById(ingredientId, productId);
             return ResponseEntity.ok().build();
-        } catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
@@ -52,7 +56,7 @@ public class NeedController {
             Need need = needService.getNeedById(ingredientId, productId);
             NeedDTO needDTO = convertNeedToDTO(need);
             return ResponseEntity.ok(needDTO);
-        } catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
@@ -74,7 +78,7 @@ public class NeedController {
         needDTO.setProductName(product.getName());
         needDTO.setIngredientName(ingredient.getIngredientName());
         return needDTO;
-        
+
     }
 
 }
