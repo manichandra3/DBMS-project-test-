@@ -32,4 +32,9 @@ public class OfServiceImpl implements OfService {
         }
         return null;
     }
+
+    @Override
+    public void saveOf(Of of) {
+        ofRepository.save(of);
+    }
 }

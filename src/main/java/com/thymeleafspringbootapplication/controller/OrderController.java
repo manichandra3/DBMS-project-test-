@@ -23,9 +23,10 @@ public class OrderController {
     private final PaysServiceImpl paysServiceImpl;
 
     @GetMapping("/showAll")
-    public ResponseEntity<List<Order>> showAllOrders() {
+    public ResponseEntity<List<OrderDTO>> showAllOrders() {
         List<Order> ordersList = orderService.getAllOrders();
-        return ResponseEntity.ok(ordersList);
+        List<OrderDTO> orderDTOList = convertToOrderDTO(ordersList);
+        return ResponseEntity.ok(orderDTOList);
     }
 
     @PostMapping("/save")

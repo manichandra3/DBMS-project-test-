@@ -64,4 +64,9 @@ public class OrderServiceImpl implements OrderService {
         }
         return customer;
     }
+
+    @Override
+    public Long getLastOrderId() {
+        return orderRepository.findLastOrderId();
+    }
 }

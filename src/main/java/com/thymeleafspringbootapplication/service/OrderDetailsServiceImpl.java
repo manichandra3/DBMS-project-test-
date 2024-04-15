@@ -35,4 +35,14 @@ public class OrderDetailsServiceImpl implements OrderDetailsService{
             throw new RuntimeException("Order not found for id " + id);
         }
     }
+
+    @Override
+    public Long getLastOrderDid() {
+        return orderDetailsRepository.findLastOrderDid();
+    }
+
+    @Override
+    public void saveOrderDetails(OrderDetails orderDetails) {
+        orderDetailsRepository.save(orderDetails);
+    }
 }

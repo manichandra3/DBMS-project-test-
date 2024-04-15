@@ -18,4 +18,6 @@ public interface OrderService {
 
     Customer getCustomerById(long id);
 
+    Long getLastOrderId();
+
 }

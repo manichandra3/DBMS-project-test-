@@ -38,4 +38,9 @@ public class HasServiceImpl implements HasService {
         }
         return orderDetailsReturn;
     }
+
+    @Override
+    public void saveHas(Has has) {
+        hasRepository.save(has);
+    }
 }

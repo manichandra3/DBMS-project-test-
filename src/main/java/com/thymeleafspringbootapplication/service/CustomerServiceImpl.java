@@ -24,8 +24,7 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Override
     public void saveCustomer(Customer customer) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'saveCustomer'");
+        customerRepository.save(customer);
     }
 
     @Override
@@ -44,6 +43,11 @@ public class CustomerServiceImpl implements CustomerService{
     public void deleteCustomerById(long id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'deleteCustomerById'");
+    }
+
+    @Override
+    public Long getLastCustomerId() {
+        return customerRepository.findLastCustomerId();
     }
 
 }

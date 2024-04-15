@@ -7,4 +7,6 @@ import java.util.List;
 public interface OrderDetailsService {
     List<OrderDetails> getAllOrderDetails();
     OrderDetails getOrderDetailsById(Long id);
+    Long getLastOrderDid();
+    void saveOrderDetails(OrderDetails orderDetails);
 }

@@ -11,6 +11,9 @@ import java.util.List;
 @AllArgsConstructor
 public class SummaryDTO {
     private Long id;
+    private String customerName;
+    private String contact;
+    private String paymentMode;
     private List<OrderDetails> orderDetailsList;
     private List<Product> productList;
 }
