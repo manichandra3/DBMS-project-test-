@@ -9,4 +9,5 @@ public interface OrderDetailsService {
     OrderDetails getOrderDetailsById(Long id);
     Long getLastOrderDid();
     void saveOrderDetails(OrderDetails orderDetails);
+    Long getTotalOrderQuantity(Long productId);
 }

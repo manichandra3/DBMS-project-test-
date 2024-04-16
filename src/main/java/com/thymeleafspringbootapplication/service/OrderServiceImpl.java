@@ -69,4 +69,9 @@ public class OrderServiceImpl implements OrderService {
     public Long getLastOrderId() {
         return orderRepository.findLastOrderId();
     }
+
+    @Override
+    public Long getOrderTotalSum() {
+        return orderRepository.findTotalOrders();
+    }
 }

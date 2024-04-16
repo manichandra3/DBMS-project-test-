@@ -12,8 +12,13 @@ import java.util.Optional;
 @Service
 public class ProductServiceImpl implements ProductService{
 
+
+    private final ProductRepository productRepository;
+
     @Autowired
-    private ProductRepository productRepository;
+    public ProductServiceImpl(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     public List<Product> getAllProducts() {
         Iterable<Product> iterable = productRepository.findAll();
@@ -52,5 +57,15 @@ public class ProductServiceImpl implements ProductService{
         } catch (Exception e) {
             throw new RuntimeException(" Product not found for name :: " + name);
         }
+    }
+
+    @Override
+    public Double getTotalMakePrice(Long productId) {
+        return productRepository.findProductMakePriceById(productId);
+    }
+
+    @Override
+    public Double getTotalSellPrice(Long productId) {
+        return productRepository.findProductSellPriceById(productId);
     }
 }

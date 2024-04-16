@@ -9,4 +9,6 @@ public interface ProductService {
     Product getProductById(long id);
     void deleteProductById(long id);
     List<Product> getProductsByName(String Name);
+    Double getTotalMakePrice(Long productId);
+    Double getTotalSellPrice(Long productId);
 }

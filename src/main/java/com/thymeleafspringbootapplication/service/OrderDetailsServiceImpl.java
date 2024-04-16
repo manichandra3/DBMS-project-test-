@@ -45,4 +45,9 @@ public class OrderDetailsServiceImpl implements OrderDetailsService{
     public void saveOrderDetails(OrderDetails orderDetails) {
         orderDetailsRepository.save(orderDetails);
     }
+
+    @Override
+    public Long getTotalOrderQuantity(Long productId) {
+        return orderDetailsRepository.sumProductQuantityByProductId(productId);
+    }
 }

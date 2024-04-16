@@ -20,4 +20,6 @@ public interface OrderService {
 
     Long getLastOrderId();
 
+    Long getOrderTotalSum();
+
 }
