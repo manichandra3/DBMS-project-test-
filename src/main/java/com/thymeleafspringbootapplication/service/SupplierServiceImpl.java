@@ -1,16 +1,16 @@
 package com.thymeleafspringbootapplication.service;
 
+import com.thymeleafspringbootapplication.exception.ResourceNotFoundException;
 import com.thymeleafspringbootapplication.model.Supplier;
 import com.thymeleafspringbootapplication.repository.SupplierRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class SupplierServiceImpl implements SupplierService{
 
-    SupplierRepository supplierRepository;
+    private final SupplierRepository supplierRepository;
 
     public SupplierServiceImpl(SupplierRepository supplierRepository) {
         this.supplierRepository = supplierRepository;
@@ -28,14 +28,8 @@ public class SupplierServiceImpl implements SupplierService{
 
     @Override
     public Supplier getSupplierById(long id) {
-        Optional<Supplier> optional = supplierRepository.findById(id);
-        Supplier supplier;
-        if (optional.isPresent()) {
-            supplier =  optional.get();
-        } else {
-            throw new RuntimeException("Supplier not found for id :: " + id);
-        }
-        return supplier;
+        return supplierRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Supplier not found for id :: " + id));
     }
 
     @Override

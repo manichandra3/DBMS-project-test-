@@ -2,10 +2,10 @@ package com.thymeleafspringbootapplication.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.thymeleafspringbootapplication.exception.ResourceNotFoundException;
 import com.thymeleafspringbootapplication.model.Customer;
 import com.thymeleafspringbootapplication.model.Order;
 import com.thymeleafspringbootapplication.repository.CustomerRepository;
@@ -38,14 +38,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order getOrderById(long id) {
-        Optional<Order> optional = orderRepository.findById(id);
-        Order order;
-        if (optional.isPresent()) {
-            order = optional.get();
-        } else {
-            throw new RuntimeException("Order not found for Id :: " + id);
-        }
-        return order;
+        return orderRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found for id :: " + id));
     }
 
     @Override
@@ -55,14 +49,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Customer getCustomerById(long id) {
-        Optional<Customer> optional = customerRepository.findById(id);
-        Customer customer;
-        if (optional.isPresent()) {
-            customer = optional.get();
-        } else {
-            throw new RuntimeException("Customer not found for id :: " + id);
-        }
-        return customer;
+        return customerRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Customer not found for id :: " + id));
     }
 
     @Override

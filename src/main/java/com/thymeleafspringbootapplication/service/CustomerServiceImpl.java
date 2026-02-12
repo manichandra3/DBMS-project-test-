@@ -1,10 +1,10 @@
 package com.thymeleafspringbootapplication.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.thymeleafspringbootapplication.exception.ResourceNotFoundException;
 import com.thymeleafspringbootapplication.model.Customer;
 import com.thymeleafspringbootapplication.repository.CustomerRepository;
 
@@ -18,8 +18,9 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Override
     public List<Customer> getAllCustomers() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllCustomers'");
+        List<Customer> customers = new java.util.ArrayList<>();
+        customerRepository.findAll().forEach(customers::add);
+        return customers;
     }
 
     @Override
@@ -29,20 +30,13 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Override
     public Customer getCustomerById(long id) {
-        Optional<Customer> optional = customerRepository.findById(id);
-        Customer customer;
-        if(optional.isPresent()) {
-            customer = optional.get();
-        } else {
-            throw new RuntimeException("Customer not found for Id :: " + id);
-        }
-        return customer;
+        return customerRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Customer not found for id :: " + id));
     }
 
     @Override
     public void deleteCustomerById(long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteCustomerById'");
+        customerRepository.deleteById(id);
     }
 
     @Override

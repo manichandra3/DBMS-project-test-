@@ -1,5 +1,6 @@
 package com.thymeleafspringbootapplication.service;
 
+import com.thymeleafspringbootapplication.exception.ResourceNotFoundException;
 import com.thymeleafspringbootapplication.model.*;
 import com.thymeleafspringbootapplication.repository.IngredientRepository;
 import com.thymeleafspringbootapplication.repository.SupplierRepository;
@@ -7,7 +8,6 @@ import com.thymeleafspringbootapplication.repository.SuppliesRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class SuppliesServiceImpl implements SuppliesService {
@@ -34,15 +34,9 @@ public class SuppliesServiceImpl implements SuppliesService {
 
     @Override
     public Supplies getSupplyById(Long ingredientId, Long supplierId) {
-        SuppliesKey suppliesKey = new SuppliesKey(ingredientId,supplierId);
-        Optional<Supplies> optional = suppliesRepository.findById(suppliesKey);
-        Supplies supplies;
-        if(optional.isPresent()){
-            supplies = optional.get();
-        } else {
-            throw new RuntimeException("Supplier not found for id :: " + suppliesKey);
-        }
-        return supplies;
+        SuppliesKey suppliesKey = new SuppliesKey(ingredientId, supplierId);
+        return suppliesRepository.findById(suppliesKey)
+                .orElseThrow(() -> new ResourceNotFoundException("Supply not found for id :: " + suppliesKey));
     }
 
     @Override
@@ -53,25 +47,13 @@ public class SuppliesServiceImpl implements SuppliesService {
 
     @Override
     public Supplier getSupplierById(Long supplierId) {
-        Optional<Supplier> optional = supplierRepository.findById(supplierId);
-        Supplier supplier;
-        if(optional.isPresent()) {
-            supplier = optional.get();
-        } else {
-            throw new RuntimeException(" Supplier not found for id :: " + supplierId);
-        }
-        return supplier;
+        return supplierRepository.findById(supplierId)
+                .orElseThrow(() -> new ResourceNotFoundException("Supplier not found for id :: " + supplierId));
     }
 
     @Override
     public Ingredient getIngredientById(Long ingredientId) {
-        Optional<Ingredient> optional = ingredientRepository.findById(ingredientId);
-        Ingredient ingredient;
-        if(optional.isPresent()) {
-            ingredient = optional.get();
-        } else {
-            throw new RuntimeException(" Ingredient not found for id :: " + ingredientId);
-        }
-        return ingredient;
+        return ingredientRepository.findById(ingredientId)
+                .orElseThrow(() -> new ResourceNotFoundException("Ingredient not found for id :: " + ingredientId));
     }
 }
