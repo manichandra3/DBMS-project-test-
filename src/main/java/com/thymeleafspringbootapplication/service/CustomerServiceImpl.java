@@ -2,18 +2,27 @@ package com.thymeleafspringbootapplication.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.thymeleafspringbootapplication.exception.ResourceNotFoundException;
 import com.thymeleafspringbootapplication.model.Customer;
 import com.thymeleafspringbootapplication.repository.CustomerRepository;
+import com.thymeleafspringbootapplication.repository.PaysRepository;
 
 @Service
 public class CustomerServiceImpl implements CustomerService{
 
+    private static final Logger logger = LoggerFactory.getLogger(CustomerServiceImpl.class);
+
     private final CustomerRepository customerRepository;
-    public CustomerServiceImpl(CustomerRepository customerRepository) {
+    private final PaysRepository paysRepository;
+
+    public CustomerServiceImpl(CustomerRepository customerRepository, PaysRepository paysRepository) {
         this.customerRepository = customerRepository;
+        this.paysRepository = paysRepository;
     }
 
     @Override
@@ -35,11 +44,15 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
+    @Transactional
     public void deleteCustomerById(long id) {
         if (!customerRepository.existsById(id)) {
             throw new ResourceNotFoundException("Customer not found for id :: " + id);
         }
+        logger.info("Deleting customer with id {} and its related records", id);
+        paysRepository.deleteByCustomerId(id);
         customerRepository.deleteById(id);
+        logger.info("Successfully deleted customer with id {}", id);
     }
 
     @Override

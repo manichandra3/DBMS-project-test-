@@ -5,5 +5,5 @@ import com.thymeleafspringbootapplication.model.PaysKey;
 import org.springframework.data.repository.CrudRepository;
 
 public interface PaysRepository extends CrudRepository<Pays, PaysKey> {
-
+    void deleteByCustomerId(Long customerId);
 }
