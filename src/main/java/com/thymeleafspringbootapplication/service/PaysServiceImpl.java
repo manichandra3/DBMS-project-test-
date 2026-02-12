@@ -1,5 +1,6 @@
 package com.thymeleafspringbootapplication.service;
 
+import com.thymeleafspringbootapplication.exception.ResourceNotFoundException;
 import com.thymeleafspringbootapplication.model.Pays;
 import com.thymeleafspringbootapplication.model.PaysKey;
 import com.thymeleafspringbootapplication.repository.PaysRepository;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -26,12 +26,8 @@ public class PaysServiceImpl implements PaysService{
 
     @Override
     public Pays getPaysById(PaysKey id) {
-        Optional<Pays> optional = paysRepository.findById(id);
-        if (optional.isPresent()) {
-            return optional.get();
-        } else {
-            throw new RuntimeException("Pays not found");
-        }
+        return paysRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Pays not found for id :: " + id));
     }
 
     @Override

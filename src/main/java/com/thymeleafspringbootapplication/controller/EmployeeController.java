@@ -2,13 +2,13 @@ package com.thymeleafspringbootapplication.controller;
 
 import com.thymeleafspringbootapplication.model.Employee;
 import com.thymeleafspringbootapplication.service.EmployeeService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/employees")
 public class EmployeeController {
 
@@ -27,7 +27,7 @@ public class EmployeeController {
 
     //	Add new employee.
     @PostMapping("/save")
-    public ResponseEntity<String> saveEmployee(Employee employee) {
+    public ResponseEntity<String> saveEmployee(@Valid @RequestBody Employee employee) {
         employeeService.saveEmployee(employee);
         return ResponseEntity.ok("Employee successfully saved to the Database");
     }

@@ -1,5 +1,6 @@
 package com.thymeleafspringbootapplication.service;
 
+import com.thymeleafspringbootapplication.exception.ResourceNotFoundException;
 import com.thymeleafspringbootapplication.model.Ingredient;
 import com.thymeleafspringbootapplication.model.Need;
 import com.thymeleafspringbootapplication.model.NeedKey;
@@ -11,7 +12,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -19,7 +19,7 @@ public class NeedServiceImpl implements NeedService {
 
     private final ProductRepository productRepository;
     private final IngredientRepository ingredientRepository;
-    NeedRepository needRepository;
+    private final NeedRepository needRepository;
 
     @Override
     public void saveNeed(Need need) {
@@ -45,25 +45,13 @@ public class NeedServiceImpl implements NeedService {
 
     @Override
     public Product getProductById(Long productId) {
-        Optional<Product> optional = productRepository.findById(productId);
-        Product product;
-        if (optional.isPresent()) {
-            product = optional.get();
-        } else {
-            throw new RuntimeException(" Product not found for id :: " + productId);
-        }
-        return product;
+        return productRepository.findById(productId)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found for id :: " + productId));
     }
 
     @Override
     public Ingredient getIngredientById(Long ingredientId) {
-        Optional<Ingredient> optional = ingredientRepository.findById(ingredientId);
-        Ingredient ingredient;
-        if (optional.isPresent()) {
-            ingredient = optional.get();
-        } else {
-            throw new RuntimeException(" Ingredient not found for id :: " + ingredientId);
-        }
-        return ingredient;
+        return ingredientRepository.findById(ingredientId)
+                .orElseThrow(() -> new ResourceNotFoundException("Ingredient not found for id :: " + ingredientId));
     }
 }

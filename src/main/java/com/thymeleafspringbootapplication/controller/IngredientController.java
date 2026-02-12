@@ -4,16 +4,15 @@ import com.thymeleafspringbootapplication.model.Ingredient;
 import com.thymeleafspringbootapplication.service.IngredientService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/ingredients")
 public class IngredientController {
 
-    IngredientService ingredientService;
+    private final IngredientService ingredientService;
 
     public IngredientController(IngredientService ingredientService) {
         this.ingredientService = ingredientService;
@@ -35,7 +34,7 @@ public class IngredientController {
         }
     }
 
-    @PostMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Void> updateIngredient(@PathVariable long id, @RequestBody Ingredient updatedIngredient) {
         Ingredient ingredient = ingredientService.getIngredientById(id);
 

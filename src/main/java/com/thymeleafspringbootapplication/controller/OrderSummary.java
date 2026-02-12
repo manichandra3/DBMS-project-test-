@@ -4,46 +4,46 @@ import com.thymeleafspringbootapplication.model.OrderDetails;
 import com.thymeleafspringbootapplication.model.PaysKey;
 import com.thymeleafspringbootapplication.model.Product;
 import com.thymeleafspringbootapplication.model.SummaryDTO;
-import com.thymeleafspringbootapplication.service.CustomerServiceImpl;
-import com.thymeleafspringbootapplication.service.HasServiceImpl;
-import com.thymeleafspringbootapplication.service.OfServiceImpl;
-import com.thymeleafspringbootapplication.service.PaysServiceImpl;
+import com.thymeleafspringbootapplication.service.CustomerService;
+import com.thymeleafspringbootapplication.service.HasService;
+import com.thymeleafspringbootapplication.service.OfService;
+import com.thymeleafspringbootapplication.service.PaysService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/order")
 public class OrderSummary {
-    private final HasServiceImpl hasServiceImpl;
-    private final OfServiceImpl ofServiceImpl;
-    private final PaysServiceImpl paysServiceImpl;
-    private final CustomerServiceImpl customerServiceImpl;
+    private final HasService hasService;
+    private final OfService ofService;
+    private final PaysService paysService;
+    private final CustomerService customerService;
 
-    public OrderSummary(HasServiceImpl hasServiceImpl, OfServiceImpl ofServiceImpl, PaysServiceImpl paysServiceImpl, CustomerServiceImpl customerServiceImpl) {
-        this.hasServiceImpl = hasServiceImpl;
-        this.ofServiceImpl = ofServiceImpl;
-        this.paysServiceImpl = paysServiceImpl;
-        this.customerServiceImpl = customerServiceImpl;
+    public OrderSummary(HasService hasService, OfService ofService, PaysService paysService, CustomerService customerService) {
+        this.hasService = hasService;
+        this.ofService = ofService;
+        this.paysService = paysService;
+        this.customerService = customerService;
     }
 
     @GetMapping("/summary/{id}")
     public ResponseEntity<SummaryDTO> orderSummary(@PathVariable("id") Long id) {
         SummaryDTO summaryDTO = new SummaryDTO();
         summaryDTO.setId(id);
-        summaryDTO.setOrderDetailsList(hasServiceImpl.getOrderDetails(id));
+        summaryDTO.setOrderDetailsList(hasService.getOrderDetails(id));
         PaysKey paysKey = new PaysKey(id);
-        summaryDTO.setCustomerName(customerServiceImpl.getCustomerById(paysServiceImpl.getPaysById(paysKey).getCustomerId()).getName());
-        summaryDTO.setContact(customerServiceImpl.getCustomerById(paysServiceImpl.getPaysById(paysKey).getCustomerId()).getContact());
-        summaryDTO.setPaymentMode(paysServiceImpl.getPaysById(paysKey).getPaymentMode());
+        summaryDTO.setCustomerName(customerService.getCustomerById(paysService.getPaysById(paysKey).getCustomerId()).getName());
+        summaryDTO.setContact(customerService.getCustomerById(paysService.getPaysById(paysKey).getCustomerId()).getContact());
+        summaryDTO.setPaymentMode(paysService.getPaysById(paysKey).getPaymentMode());
         List<Product> productList = new ArrayList<>();
         for (OrderDetails orderDetails : summaryDTO.getOrderDetailsList()) {
-            productList.add(ofServiceImpl.findProduct(orderDetails.getId()));
+            productList.add(ofService.findProduct(orderDetails.getId()));
         }
         summaryDTO.setProductList(productList);
         return ResponseEntity.ok(summaryDTO);

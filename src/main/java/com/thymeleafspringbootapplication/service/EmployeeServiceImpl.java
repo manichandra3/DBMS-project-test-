@@ -3,16 +3,20 @@ package com.thymeleafspringbootapplication.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.thymeleafspringbootapplication.exception.ResourceNotFoundException;
 import com.thymeleafspringbootapplication.model.Employee;
 import com.thymeleafspringbootapplication.repository.EmployeeRepository;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService{
-	@Autowired
-	private EmployeeRepository employeeRepository;
+
+	private final EmployeeRepository employeeRepository;
+
+	public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
+		this.employeeRepository = employeeRepository;
+	}
 	
 	@Override
 	public List<Employee> getAllEmployees() {
@@ -26,14 +30,8 @@ public class EmployeeServiceImpl implements EmployeeService{
 
 	@Override
 	public Employee getEmployeeById(long id) {
-		Optional<Employee> optional = employeeRepository.findById(id);
-		Employee employee;
-		if (optional.isPresent()) {
-			employee =  optional.get();
-		} else {
-			throw new RuntimeException("Employee not found for id :: " + id);
-		}
-		return employee;
+		return employeeRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Employee not found for id :: " + id));
 	}
 
 	@Override

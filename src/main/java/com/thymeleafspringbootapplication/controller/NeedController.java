@@ -7,13 +7,12 @@ import com.thymeleafspringbootapplication.model.Product;
 import com.thymeleafspringbootapplication.service.NeedService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Controller
+@RestController
 @RequestMapping("/need")
 public class NeedController {
 

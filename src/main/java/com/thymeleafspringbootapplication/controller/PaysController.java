@@ -6,26 +6,21 @@ import com.thymeleafspringbootapplication.model.PaysDTO;
 import com.thymeleafspringbootapplication.service.CustomerService;
 import com.thymeleafspringbootapplication.service.OrderService;
 import com.thymeleafspringbootapplication.service.PaysService;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/pays")
-
-@NoArgsConstructor
 public class PaysController {
-    private PaysService paysService;
-    private CustomerService customerService;
-    private OrderService orderService;
+    private final PaysService paysService;
+    private final CustomerService customerService;
+    private final OrderService orderService;
 
-    @Autowired
     public PaysController(PaysService paysService, CustomerService customerService, OrderService orderService) {
         this.paysService = paysService;
         this.customerService = customerService;

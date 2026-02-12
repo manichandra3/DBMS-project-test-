@@ -4,23 +4,22 @@ import com.thymeleafspringbootapplication.model.Order;
 import com.thymeleafspringbootapplication.model.OrderDTO;
 import com.thymeleafspringbootapplication.model.PaysKey;
 import com.thymeleafspringbootapplication.service.OrderService;
-import com.thymeleafspringbootapplication.service.PaysServiceImpl;
+import com.thymeleafspringbootapplication.service.PaysService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-@Controller
+@RestController
 @AllArgsConstructor
 @RequestMapping("/orders")
 public class OrderController {
     private final OrderService orderService;
-    private final PaysServiceImpl paysServiceImpl;
+    private final PaysService paysService;
 
     @GetMapping("/showAll")
     public ResponseEntity<List<OrderDTO>> showAllOrders() {
@@ -63,7 +62,7 @@ public class OrderController {
             orderDTO.setOrderTotal(order.getOrderTotal());
             orderDTO.setOrderDate(order.getOrderDate());
             orderDTO.setId(order.getOrderId());
-            orderDTO.setCustomerId(paysServiceImpl.getPaysById(paysKey).getCustomerId());
+            orderDTO.setCustomerId(paysService.getPaysById(paysKey).getCustomerId());
             orderDTOList.add(orderDTO);
         }
         return orderDTOList;

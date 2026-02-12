@@ -4,22 +4,21 @@ import com.thymeleafspringbootapplication.model.Product;
 import com.thymeleafspringbootapplication.service.OrderDetailsService;
 import com.thymeleafspringbootapplication.service.OrderService;
 import com.thymeleafspringbootapplication.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/stats")
 public class StatsController {
 
     private final OrderService orderService;
     private final OrderDetailsService orderDetailsService;
     private final ProductService productService;
-    @Autowired
+
     public StatsController(OrderService orderService, OrderDetailsService orderDetailsService, ProductService productService) {
         this.orderService = orderService;
         this.orderDetailsService = orderDetailsService;

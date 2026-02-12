@@ -1,13 +1,12 @@
 package com.thymeleafspringbootapplication.service;
 
+import com.thymeleafspringbootapplication.exception.ResourceNotFoundException;
 import com.thymeleafspringbootapplication.model.Product;
 import com.thymeleafspringbootapplication.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -15,7 +14,6 @@ public class ProductServiceImpl implements ProductService{
 
     private final ProductRepository productRepository;
 
-    @Autowired
     public ProductServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
@@ -35,14 +33,8 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public Product getProductById(long id) {
-        Optional<Product> optional = productRepository.findById(id);
-        Product product;
-        if (optional.isPresent()) {
-            product =  optional.get();
-        } else {
-            throw new RuntimeException(" Product not found for id :: " + id);
-        }
-        return product;
+        return productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found for id :: " + id));
     }
 
     @Override
