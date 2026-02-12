@@ -14,7 +14,7 @@ import java.util.Optional;
 @RestController
 public class LoginController {
 
-    EmployeeService employeeService;
+    private final EmployeeService employeeService;
 
     public LoginController(EmployeeService employeeService) {
         this.employeeService = employeeService;
