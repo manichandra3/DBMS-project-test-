@@ -78,12 +78,12 @@ public class OrderServiceImpl implements OrderService {
 
         // Find Has records to get associated order detail IDs
         List<Has> hasRecords = hasRepository.findByOrderId(id);
-        List<Long> orderDids = hasRecords.stream().map(Has::getId).collect(Collectors.toList());
+        List<Long> orderDetailIds = hasRecords.stream().map(Has::getId).collect(Collectors.toList());
 
         // Delete Of and OrderDetails records linked via Has
-        if (!orderDids.isEmpty()) {
-            ofRepository.deleteAllById(orderDids);
-            orderDetailsRepository.deleteAllById(orderDids);
+        if (!orderDetailIds.isEmpty()) {
+            ofRepository.deleteAllByIdIn(orderDetailIds);
+            orderDetailsRepository.deleteAllByIdIn(orderDetailIds);
         }
 
         // Delete Has, Makes, and Pays records
