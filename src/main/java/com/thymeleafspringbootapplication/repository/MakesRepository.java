@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MakesRepository extends CrudRepository<Makes, Long> {
+    void deleteByEmployeeId(Long employeeId);
 }

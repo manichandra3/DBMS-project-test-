@@ -3,19 +3,27 @@ package com.thymeleafspringbootapplication.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.thymeleafspringbootapplication.exception.ResourceNotFoundException;
 import com.thymeleafspringbootapplication.model.Employee;
 import com.thymeleafspringbootapplication.repository.EmployeeRepository;
+import com.thymeleafspringbootapplication.repository.MakesRepository;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService{
 
-	private final EmployeeRepository employeeRepository;
+	private static final Logger logger = LoggerFactory.getLogger(EmployeeServiceImpl.class);
 
-	public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
+	private final EmployeeRepository employeeRepository;
+	private final MakesRepository makesRepository;
+
+	public EmployeeServiceImpl(EmployeeRepository employeeRepository, MakesRepository makesRepository) {
 		this.employeeRepository = employeeRepository;
+		this.makesRepository = makesRepository;
 	}
 	
 	@Override
@@ -35,8 +43,15 @@ public class EmployeeServiceImpl implements EmployeeService{
 	}
 
 	@Override
+	@Transactional
 	public void deleteEmployeeById(long id) {
-		this.employeeRepository.deleteById(id);
+		if (!employeeRepository.existsById(id)) {
+			throw new ResourceNotFoundException("Employee not found for id :: " + id);
+		}
+		logger.info("Deleting employee with id {} and its related records", id);
+		makesRepository.deleteByEmployeeId(id);
+		employeeRepository.deleteById(id);
+		logger.info("Successfully deleted employee with id {}", id);
 	}
 
 	@Override
